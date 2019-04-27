@@ -163,6 +163,17 @@ editPlayer: (req, res) => {
                 });
             });
         });
+    },
+deleteKateg: (req, res) => {
+        let kategId = req.params.id;
+        let deleteKategQuery = 'DELETE FROM kategorije_komponenti WHERE id = "' + kategId + '"';
+
+                       db.query(deleteKategQuery, (err, result) => {
+                    if (err) {
+                        return res.status(500).send(err);
+                    }
+                    res.redirect('/');
+                     });
     }
 };
 

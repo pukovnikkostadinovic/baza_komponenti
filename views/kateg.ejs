@@ -6,6 +6,7 @@
                     <tr>
                         <th scope="col">Kategorija</th>
                         <th scope="col">Kratak naziv</th>
+                        <th scope="col">Akcija</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -13,6 +14,10 @@
                         <tr>
                             <td><a href="kateg/<%= kategorija.id %>"><%= kategorija.ime_kategorije %></a></td>
                             <td><%= kategorija.kratak_opis %></td>
+                            <td>
+                                <a href="/izmjeni/<%= kategorija.id %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Izmjeni</a>
+                                <a href="/izbrisi/<%= kategorija.id %>" class="btn btn-sm btn-danger">Izbriši</a>
+                            </td>
                         </tr>
                     <% }) %>
                 </tbody>

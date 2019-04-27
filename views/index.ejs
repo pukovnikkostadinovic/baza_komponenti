@@ -13,6 +13,10 @@
                         <tr>
                             <td><%= kategorija.ime_kategorije %></td>
                             <td><%= kategorija.kratak_opis %></td>
+           		        <td>
+                                <a href="/izmjeni/<%= kategorija.id %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Izmjeni</a>
+                                <a href="/izbrisi/<%= kategorija.id %>" class="btn btn-sm btn-danger">Izbriši</a>
+                            </td>
                         </tr>
                     <% }) %>
                 </tbody>

@@ -63,7 +63,30 @@ module.exports = {
             }
         });
     },
-    editPlayerPage: (req, res) => {
+addKategPage: (req, res) => {
+        res.render('add-kateg.ejs', {
+            title:"Dodavanje kategorije"
+            ,message: ''
+        });
+    },
+addKateg: (req, res) => {
+        /*if (!req.files) {
+            return res.status(400).send("No files were uploaded.");
+        }*/
+
+        let message = '';
+
+        let ime_kategorije = req.body.ime_kateg;
+        let kratak_opis = req.body.kr_opis;
+        let query = "INSERT INTO `kategorije_komponenti` (ime_kategorije, kratak_opis)  VALUES ('" +
+                            ime_kategorije + "', '" + kratak_opis + "')";
+                        db.query(query, (err, result) => {
+                            if (err) {
+                                return res.status(500).send(err);
+                            }
+                            res.redirect('/');
+});},
+ editPlayerPage: (req, res) => {
         let playerId = req.params.id;
         let query = "SELECT * FROM `players` WHERE id = '" + playerId + "' ";
         db.query(query, (err, result) => {

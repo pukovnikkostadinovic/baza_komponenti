@@ -7,7 +7,7 @@ const app = express();
 
 const {getHomePage} = require('./routes/index');
 const {getKategKomp} = require('./routes/index');
-const {addPlayerPage, addPlayer, deletePlayer, editPlayer,komponentePage,komplokPage, editPlayerPage} = require('./routes/player');
+const {addPlayerPage, addPlayer, addKategPage, addKateg, deletePlayer, editPlayer,komponentePage,komplokPage, editPlayerPage} = require('./routes/player');
 const port = 5000;
 
 
@@ -61,9 +61,11 @@ app.get('/', getKategKomp);
 app.get('/kateg/:id',komponentePage);
 app.get('/komp/:id',komplokPage);
 app.get('/add', addPlayerPage);
+app.get('/dod',addKategPage);
 app.get('/edit/:id', editPlayerPage);
 app.get('/delete/:id', deletePlayer);
 app.post('/add', addPlayer);
+app.post('/dod', addKateg);
 app.post('/edit/:id', editPlayer);
 
 

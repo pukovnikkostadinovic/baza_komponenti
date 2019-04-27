@@ -1,0 +1,26 @@
+<% include partials/header.ejs %>
+    <div class="table-wrapper">
+        <% if (komponente.length > 0) {%>
+            <table class="table table-hovered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Ime komponente</th>
+                        <th scope="col">Kratak opis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% komponente.forEach((komponenta, index) => { %>
+                        <tr>
+                            <td><a href="/komp/<%= komponenta.id %>"><%= komponenta.ime_komponente %></a></td>
+                            <td><%= komponenta.kratak_opis_komp %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="text-center">No players found. Go <a href="/add" >here</a> to add players.</p>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>

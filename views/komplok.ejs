@@ -1,0 +1,28 @@
+<% include partials/header.ejs %>
+    <div class="table-wrapper">
+        <% if (komplok.length > 0) {%>
+            <table class="table table-hovered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Komponenta</th>
+                        <th scope="col">Kolicina</th>
+			<th scope="col">Lokacija</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% komplok.forEach((komp, index) => { %>
+                        <tr>
+                            <td><%= komp.ime_komponente %></td>
+                            <td><%= komp.kolicina %></td>
+			    <td><%= komp.ime_lokacije %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="text-center">No players found. Go <a href="/add" >here</a> to add players.</p>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>

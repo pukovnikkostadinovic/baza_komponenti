@@ -99,7 +99,34 @@ addKateg: (req, res) => {
                 ,message: ''
             });
         });
-    },komponentePage: (req, res) => {
+    },editKategPage: (req, res) => {
+        let kategId = req.params.id;
+        let query = "SELECT * FROM `kategorije_komponenti` WHERE id = '" + kategId + "' ";
+        db.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.render('edit-kateg.ejs', {
+                title: "Izmjeni Kategoriju"
+                ,kategorija: result[0]
+                ,message: ''
+            });
+        });
+    },
+editKateg: (req, res) => {
+        let kategId = req.params.id;
+        let ime_kategorije = req.body.ime_kat;
+        let kratak_opis = req.body.kr_op;
+
+        let query = "UPDATE `kategorije_komponenti` SET `ime_kategorije` = '" + ime_kategorije + "', `kratak_opis` = '" + kratak_opis + "' WHERE `kategorije_komponenti`.`id` = '" + kategId + "'";
+        db.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.redirect('/');
+        });
+    },
+komponentePage: (req, res) => {
         let kategId = req.params.id;
         let query = "SELECT * FROM `komponente` WHERE kateg_id = '" + kategId + "' ";
         db.query(query, (err, result) => {

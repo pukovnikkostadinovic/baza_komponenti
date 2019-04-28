@@ -7,7 +7,7 @@ const app = express();
 
 const {getHomePage} = require('./routes/index');
 const {getKategKomp} = require('./routes/index');
-const {addPlayerPage, addPlayer, addKategPage, addKateg, deletePlayer,deleteKateg, editPlayer,editKateg, komponentePage,komplokPage, editPlayerPage, editKategPage} = require('./routes/player');
+const {addKompPage,addPlayerPage, addPlayer, addKategPage, addKateg, deletePlayer,deleteKateg, editPlayer,editKateg, komponentePage,komplokPage, editPlayerPage, editKategPage} = require('./routes/player');
 const port = 5000;
 
 
@@ -26,7 +26,8 @@ const db1 = mysql.createConnection ({
     host: 'localhost',
     user: 'root',
     password: 'dlibreman',
-    database: 'baza_komponenti'
+    database: 'baza_komponenti',
+	multipleStatements: true
 });
 
 // connect to database
@@ -61,6 +62,7 @@ app.get('/', getKategKomp);
 app.get('/kateg/:id',komponentePage);
 app.get('/komp/:id',komplokPage);
 app.get('/add', addPlayerPage);
+app.get('/dod_komp', addKompPage);
 app.get('/dod',addKategPage);
 app.get('/edit/:id', editPlayerPage);
 app.get('/izmjeni/:id',editKategPage);

@@ -85,7 +85,26 @@ addKateg: (req, res) => {
                                 return res.status(500).send(err);
                             }
                             res.redirect('/');
-});},
+});
+},
+addKompPage: (req, res) => {
+	var return_data={};
+        let query="select * from kategorije_komponenti;select * from lokacije;";
+
+	db.query(query,(err, results,fields) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+	res.render('dodaj-komp.ejs', {
+            title:"Dodaj Komponentu"
+            ,message: '',
+	    kategorije:results[0],
+	    lokacije:results[1]
+        });
+	});
+	
+        
+    },
  editPlayerPage: (req, res) => {
         let playerId = req.params.id;
         let query = "SELECT * FROM `players` WHERE id = '" + playerId + "' ";

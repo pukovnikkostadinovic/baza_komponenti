@@ -89,21 +89,33 @@ addKateg: (req, res) => {
 },
 addKompPage: (req, res) => {
 	var return_data={};
-        let query="select * from kategorije_komponenti;select * from lokacije;";
+        let query="select * from kategorije_komponenti;";
 
-	db.query(query,(err, results,fields) => {
+	db.query(query,(err, results) => {
             if (err) {
                 return res.status(500).send(err);
             }
 	res.render('dodaj-komp.ejs', {
             title:"Dodaj Komponentu"
             ,message: '',
-	    kategorije:results[0],
-	    lokacije:results[1]
+	    kategorije:results
         });
-	});
-	
-        
+	});        
+    },
+addKomp: (req, res) => {
+        let message = '';
+        let ime_komp = req.body.ime_komp;
+        let kratak_opis = req.body.kr_op;
+        let kategorija = req.body.kategorija;
+
+        let query = "INSERT INTO `komponente` (ime_komponente,kateg_id, kratak_opis_komp) VALUES ('" +
+                            ime_komp + "', '" + kategorija + "', '" + kratak_opis + "')";
+                        db.query(query, (err, result) => {
+                            if (err) {
+                                return res.status(500).send(err);
+                            }
+                            res.redirect('/');
+             });
     },
  editPlayerPage: (req, res) => {
         let playerId = req.params.id;
@@ -120,6 +132,7 @@ addKompPage: (req, res) => {
         });
     },editKategPage: (req, res) => {
         let kategId = req.params.id;
+	console.log(kategId);
         let query = "SELECT * FROM `kategorije_komponenti` WHERE id = '" + kategId + "' ";
         db.query(query, (err, result) => {
             if (err) {
@@ -145,6 +158,34 @@ editKateg: (req, res) => {
             res.redirect('/');
         });
     },
+editKompPage: (req,res)=>{
+	let kompId=req.params.id;
+	let query = "SELECT * FROM `komponente` WHERE id = '" + kompId + "';select * from kategorije_komponenti; ";
+	db.query(query, (err, result,fields) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.render('edit-komp.ejs', {
+                title: "Izmjeni Komponentu"
+                ,komponenta: result[0][0],
+		kategorije:result[1]
+            });
+        });
+},editKomp: (req, res) => {
+        let kompId = req.params.id;
+        let ime_komponente = req.body.ime_komp;
+        let kategorija = req.body.kategorija;
+	let kr_opis = req.body.kr_op;
+	console.log(kategorija);
+        let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "', `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
+        db.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.redirect('/');
+        });
+    },
+
 komponentePage: (req, res) => {
         let kategId = req.params.id;
         let query = "SELECT * FROM `komponente` WHERE kateg_id = '" + kategId + "' ";
@@ -220,6 +261,18 @@ deleteKateg: (req, res) => {
                     }
                     res.redirect('/');
                      });
+    },
+deleteKomp: (req, res) => {
+        let kompId = req.params.id;
+        let deleteKompQuery = 'DELETE FROM komponente WHERE id = "' + kompId + '"';
+
+                       db.query(deleteKompQuery, (err, result) => {
+                    if (err) {
+                        return res.status(500).send(err);
+                    }
+                    res.redirect('/');
+                     });
     }
+
 };
 

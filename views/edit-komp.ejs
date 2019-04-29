@@ -1,0 +1,27 @@
+<% include partials/header.ejs %>
+    <div class="container">
+        <form class="add-player-form" action="" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" name="ime_komp" id="ime_komp" placeholder="Ime Komponente" value="<%= komponenta.ime_komponente %>" required>
+                </div>
+		<div class="form-group col-md-6">
+                    <select id="kategorija" name="kategorija" class="form-control" required>
+			 <% kategorije.forEach((kategorija, index) => { %>
+				<%if (komponenta.kateg_id == kategorija.id) { %>
+				<option selected value="<%= kategorija.id %>"><%= kategorija.ime_kategorije %></option>
+				<% } else{ %>
+                                <option value="<%= kategorija.id %>"><%= kategorija.ime_kategorije %></option>
+                    <% }}) %>                        
+                    </select>
+                </div>
+	
+			<div class="form-group col-md-12">
+                    <textarea  class="form-control" rows="5" name="kr_op" id="kr_op" placeholder="Kratak Opis" required><%= komponenta.kratak_opis_komp %></textarea>
+                </div>
+	            <button type="submit" class="btn btn-primary float-right">Spremi Izmjenu</button>
+</form>
+    </div>
+</div>
+</body>
+</html>

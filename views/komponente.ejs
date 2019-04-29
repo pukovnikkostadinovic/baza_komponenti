@@ -12,9 +12,9 @@
                 <tbody>
                     <% komponente.forEach((komponenta, index) => { %>
                         <tr>
-                            <td><a href="/komp/<%= komponenta.id %>"><%= komponenta.ime_komponente %></a></td>
-                            <td><%= komponenta.kratak_opis_komp %></td>
-   			    <td>
+                            <td class="col-md-3"><a href="/komp/<%= komponenta.id %>"><%= komponenta.ime_komponente %></a></td>
+                            <td class="col-md-7"><%= komponenta.kratak_opis_komp %></td>
+   			    <td class="col-md-2">
                                 <a href="/izmjeni_komp/<%= komponenta.id %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Izmjeni</a>
                                 <a href="/izbrisi_komp/<%= komponenta.id %>" class="btn btn-sm btn-danger">Izbriši</a>
                             </td>

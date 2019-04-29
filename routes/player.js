@@ -88,7 +88,6 @@ addKateg: (req, res) => {
 });
 },
 addKompPage: (req, res) => {
-	var return_data={};
         let query="select * from kategorije_komponenti;";
 
 	db.query(query,(err, results) => {
@@ -207,7 +206,8 @@ komponentePage: (req, res) => {
             }
             res.render('komplok.ejs', {
                 title: "Komponenta lokacija"
-                ,komplok: result
+                ,komplok: result,
+		kid:kompId
             });
         });
     },
@@ -272,7 +272,34 @@ deleteKomp: (req, res) => {
                     }
                     res.redirect('/');
                      });
-    }
+    },
+addKompLokPage:(req,res)=>{
+	let query="select * from lokacije";
+	
+	db.query(query,(err,result)=>{
+		if(err){
+			return res.status(500).send(err);
+		}
+		res.render('add-komp-lok.ejs', {
+                title: "Dodaj lokaciju i kolicinu"
+                ,lokacije: result
+            });
+	});	
+},
+addKompLok:(req,res)=>{
+	let kompId=req.params.id;
+	let kolicina=req.body.kolicina;
+	let lokId=req.body.lokacija;
+	
+	let query = "INSERT INTO `komp_lok_kol` (komp_id,lok_id, kolicina) VALUES ('" +
+                            kompId + "', '" + lokId + "', '" + kolicina + "')";
 
+	db.query(query, (err, result) => {
+                    if (err) {
+                        return res.status(500).send(err);
+                    }
+                    res.redirect('/');
+                     });
+}
 };
 

@@ -7,7 +7,7 @@ const app = express();
 
 const {getHomePage} = require('./routes/index');
 const {getKategKomp} = require('./routes/index');
-const {editKompLokPage,editKompLok,addKompLok,addKompLokPage,editKomp,editKompPage,deleteKomp,addKompPage,addKomp,addPlayerPage, addPlayer, addKategPage, addKateg, deletePlayer,deleteKateg, editPlayer,editKateg, komponentePage,komplokPage, editPlayerPage, editKategPage} = require('./routes/player');
+const {sveKompPage,editKompLokPage,editKompLok,addKompLok,addKompLokPage,editKomp,editKompPage,deleteKomp,addKompPage,addKomp,addPlayerPage, addPlayer, addKategPage, addKateg, deletePlayer,deleteKateg, editPlayer,editKateg, komponentePage,komplokPage, editPlayerPage, editKategPage} = require('./routes/player');
 const port = 5000;
 
 
@@ -58,6 +58,7 @@ app.use(fileUpload()); // configure fileupload
 
 // routes for the app
 
+app.get('/sve_komp', sveKompPage);
 app.get('/', getKategKomp);
 app.get('/kateg/:id',komponentePage);
 app.get('/komp/:id',komplokPage);

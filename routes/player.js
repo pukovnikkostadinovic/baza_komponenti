@@ -184,6 +184,19 @@ editKompPage: (req,res)=>{
             res.redirect('/');
         });
     },
+sveKompPage: (req, res) => {
+        let query = "select k.id, k.ime_komponente,k.kratak_opis_komp,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id group by k.id order by k.kateg_id";
+
+        db.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.render('sve-komp.ejs', {
+                title: "Sve komponente"
+                ,svekomp: result
+            });
+        });
+    },
 komponentePage: (req, res) => {
         let kategId = req.params.id;
         let query = "select k.id, k.ime_komponente,k.kratak_opis_komp,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id where k.kateg_id="+kategId+" group by k.id";
@@ -197,7 +210,8 @@ komponentePage: (req, res) => {
                 ,komponente: result
             });
         });
-    },komplokPage: (req, res) => {
+    },
+komplokPage: (req, res) => {
         let kompId = req.params.id;
         let query = "select d.id, k.ime_komponente, l.ime_lokacije, d.kolicina from komponente k,lokacije l, komp_lok_kol d where k.id=d.komp_id and l.id=d.lok_id and k.id  = '" + kompId + "' ";
         db.query(query, (err, result) => {

@@ -11,12 +11,12 @@
                 <tbody>
   		    <% kat.forEach((kategorija, index)=>{ %>
 			<tr>
-                         <td><h3>Kategorija: <%= kategorija.ime_kategorije %></h3></td>
+                         <td class="bg-light"><h3><b>Kategorija: <%= kategorija.ime_kategorije %></b></h3></td>
                         </tr>
                     <% svekomp.forEach((komponenta, index) => { %>
 				<% if (kategorija.id==komponenta.kateg_id){ %>
 			     <tr>
-                            <td class="col-md-3"><h4><a href="/komp/<%= komponenta.id %>"><%= komponenta.ime_komponente %></a></h4></td>
+                            <td class="col-md-3"><h4><%= komponenta.ime_komponente %></h4></td>
                             <td class="col-md-7"><h4><%= komponenta.kratak_opis_komp %></h4></td>
 			    <td class="col-md-2 <% if (komponenta.komada === 0) {%>bg-danger<% } else if(komponenta.komada === 1){ %>bg-warning"<% } %>">
 				<h4><%= komponenta.komada %></h4>

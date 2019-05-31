@@ -185,7 +185,7 @@ editKompPage: (req,res)=>{
         });
     },
 sveKompPage: (req, res) => {
-        let query = "select k.id, k.ime_komponente,k.kratak_opis_komp,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id group by k.id order by k.kateg_id";
+        let query = "select k.id, k.kateg_id, k.ime_komponente,k.kratak_opis_komp,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id group by k.id order by k.kateg_id;select t.id,t.ime_kategorije from kategorije_komponenti t;select l.komp_id, l.kolicina, g.ime_lokacije from komp_lok_kol l,lokacije g where l.lok_id=g.id;";
 
         db.query(query, (err, result) => {
             if (err) {
@@ -193,7 +193,9 @@ sveKompPage: (req, res) => {
             }
             res.render('sve-komp.ejs', {
                 title: "Sve komponente"
-                ,svekomp: result
+                ,svekomp: result[0]
+		,kat:result[1]
+		,komp_lok:result[2]
             });
         });
     },

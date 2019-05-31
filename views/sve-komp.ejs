@@ -9,14 +9,29 @@
                     </tr>
                 </thead>
                 <tbody>
+  		    <% kat.forEach((kategorija, index)=>{ %>
+			<tr>
+                         <td><h3>Kategorija: <%= kategorija.ime_kategorije %></h3></td>
+                        </tr>
                     <% svekomp.forEach((komponenta, index) => { %>
+				<% if (kategorija.id==komponenta.kateg_id){ %>
 			     <tr>
-                            <td class="col-md-3"><a href="/komp/<%= komponenta.id %>"><%= komponenta.ime_komponente %></a></td>
-                            <td class="col-md-7"><%= komponenta.kratak_opis_komp %></td>
+                            <td class="col-md-3"><h4><a href="/komp/<%= komponenta.id %>"><%= komponenta.ime_komponente %></a></h4></td>
+                            <td class="col-md-7"><h4><%= komponenta.kratak_opis_komp %></h4></td>
 			    <td class="col-md-2 <% if (komponenta.komada === 0) {%>bg-danger<% } else if(komponenta.komada === 1){ %>bg-warning"<% } %>">
-				<%= komponenta.komada %>
+				<h4><%= komponenta.komada %></h4>
 			    </td>   			    
                         </tr>
+			<% komp_lok.forEach((komp_lok, index)=> { %>
+			<% if(komponenta.id==komp_lok.komp_id){ %>
+			<tr>
+                            <td class="col-md-3"></td>
+                            <td class="col-md-7">[Komada: <%= komp_lok.kolicina %>] &nbsp &nbsp [Lokacija: <%= komp_lok.ime_lokacije %>]</td>
+			    <td class="col-md-2"></td>   
+			<% } %>
+			<% }) %>
+			<% } %>
+                    <% }) %>
                     <% }) %>
                 </tbody>
             </table>

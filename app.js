@@ -7,7 +7,7 @@ const app = express();
 
 const {getHomePage} = require('./routes/index');
 const {getKategKomp} = require('./routes/index');
-const {addKompLok,addKompLokPage,editKomp,editKompPage,deleteKomp,addKompPage,addKomp,addPlayerPage, addPlayer, addKategPage, addKateg, deletePlayer,deleteKateg, editPlayer,editKateg, komponentePage,komplokPage, editPlayerPage, editKategPage} = require('./routes/player');
+const {editKompLokPage,addKompLok,addKompLokPage,editKomp,editKompPage,deleteKomp,addKompPage,addKomp,addPlayerPage, addPlayer, addKategPage, addKateg, deletePlayer,deleteKateg, editPlayer,editKateg, komponentePage,komplokPage, editPlayerPage, editKategPage} = require('./routes/player');
 const port = 5000;
 
 
@@ -71,6 +71,7 @@ app.get('/izbrisi/:id', deleteKateg);
 app.get('/izbrisi_komp/:id',deleteKomp);
 app.get('/izmjeni_komp/:id',editKompPage);
 app.get('/dod_komp_lok/:id',addKompLokPage);
+app.get('/izmjeni_komplok/:id',editKompLokPage);
 
 app.post('/izmjeni_komp/:id',editKomp);
 app.post('/dod_komp',addKomp);

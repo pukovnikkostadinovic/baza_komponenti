@@ -7,18 +7,24 @@
                         <th scope="col">Komponenta</th>
                         <th scope="col">Kolicina</th>
 			<th scope="col">Lokacija</th>
+			<th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <% komplok.forEach((komp, index) => { %>
                         <tr>
                             <td><%= komp.ime_komponente %></td>
-                            <td><%= komp.kolicina %></td>
+                            <td><input type"number" name="ante" value="<%= komp.kolicina %>"></td>
 			    <td><%= komp.ime_lokacije %></td>
+			   <td>
+                                <a href="/izmjeni_komplok/<%= komp.id %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Izmjeni</a>
+                                <a href="/izbrisi/komplok<%= komp.id %>" class="btn btn-sm btn-danger">Izbriši</a>
+                            </td>
                         </tr>
                     <% }) %>
                 </tbody>
             </table>
+            
 	<a href="/dod_komp_lok/<%= kid %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Dodaj</a>
         <% } else { %>
 	<a href="/dod_komp_lok/<%= kid %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Dodaj</a>

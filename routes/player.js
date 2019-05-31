@@ -131,7 +131,7 @@ addKomp: (req, res) => {
         });
     },editKategPage: (req, res) => {
         let kategId = req.params.id;
-	console.log(kategId);
+	//console.log(kategId);
         let query = "SELECT * FROM `kategorije_komponenti` WHERE id = '" + kategId + "' ";
         db.query(query, (err, result) => {
             if (err) {
@@ -184,7 +184,6 @@ editKompPage: (req,res)=>{
             res.redirect('/');
         });
     },
-
 komponentePage: (req, res) => {
         let kategId = req.params.id;
         let query = "SELECT * FROM `komponente` WHERE kateg_id = '" + kategId + "' ";
@@ -199,7 +198,7 @@ komponentePage: (req, res) => {
         });
     },komplokPage: (req, res) => {
         let kompId = req.params.id;
-        let query = "select k.ime_komponente, l.ime_lokacije, d.kolicina from komponente k,lokacije l, komp_lok_kol d where k.id=d.komp_id and l.id=d.lok_id and k.id  = '" + kompId + "' ";
+        let query = "select d.id, k.ime_komponente, l.ime_lokacije, d.kolicina from komponente k,lokacije l, komp_lok_kol d where k.id=d.komp_id and l.id=d.lok_id and k.id  = '" + kompId + "' ";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -211,6 +210,35 @@ komponentePage: (req, res) => {
             });
         });
     },
+editKompLokPage: (req, res) => {
+        let komp_lokid = req.params.id;
+                let query = "select d.id, d.lok_id,k.ime_komponente, l.ime_lokacije, d.kolicina from komponente k,lokacije l, komp_lok_kol d where k.id=d.komp_id and l.id=d.lok_id and d.id  = '" + komp_lokid + "';select * from lokacije; ";
+        db.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.render('edit-komp-lok.ejs', {
+                title: "Izmjeni Lokaciju i količinu"
+                ,lok_kol: result[0][0]
+		,lokacije:result[1]
+                ,message: ''
+            });
+        });
+    },
+editKompLok: (req, res) => {
+        let kategId = req.params.id;
+        let ime_kategorije = req.body.ime_kat;
+        let kratak_opis = req.body.kr_op;
+
+        let query = "UPDATE `kategorije_komponenti` SET `ime_kategorije` = '" + ime_kategorije + "', `kratak_opis` = '" + kratak_opis + "' WHERE `kategorije_komponenti`.`id` = '" + kategId + "'";
+        db.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.redirect('/');
+        });
+    },
+
 editPlayer: (req, res) => {
         let playerId = req.params.id;
         let first_name = req.body.first_name;
@@ -300,6 +328,18 @@ addKompLok:(req,res)=>{
                     }
                     res.redirect('/');
                      });
+},
+allKompList:(req,res)=>{
+	let query= "select k.ime_komponente,d.ime_kategorije,sum(l.kolicina)tot_kol from komponente k, komp_lok_kol l,kategorije_komponenti d where k.id=l.komp_id and k.kateg_id=d.id group by k.ime_komponente,d.ime_kategorije order by d.ime_kategorije";
+	db.query(query,(err,result)=>{
+		if(err){
+			return res.status(500).send(err);
+		}
+		res.render('all-komp-list.ejs', {
+                title: "Sve komponente"
+                ,data: result
+            });
+	});	
 }
 };
 

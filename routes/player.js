@@ -186,7 +186,8 @@ editKompPage: (req,res)=>{
     },
 komponentePage: (req, res) => {
         let kategId = req.params.id;
-        let query = "SELECT * FROM `komponente` WHERE kateg_id = '" + kategId + "' ";
+        let query = "select k.id, k.ime_komponente,k.kratak_opis_komp,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id where k.kateg_id="+kategId+" group by k.id";
+
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -211,8 +212,8 @@ komponentePage: (req, res) => {
         });
     },
 editKompLokPage: (req, res) => {
-        let komp_lokid = req.params.id;
-                let query = "select d.id, d.lok_id,k.ime_komponente, l.ime_lokacije, d.kolicina from komponente k,lokacije l, komp_lok_kol d where k.id=d.komp_id and l.id=d.lok_id and d.id  = '" + komp_lokid + "';select * from lokacije; ";
+        let komplokId = req.params.id;
+                let query = "select d.id, d.lok_id,k.ime_komponente, l.ime_lokacije, d.kolicina from komponente k,lokacije l, komp_lok_kol d where k.id=d.komp_id and l.id=d.lok_id and d.id  = '" + komplokId + "';select * from lokacije; ";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -226,11 +227,11 @@ editKompLokPage: (req, res) => {
         });
     },
 editKompLok: (req, res) => {
-        let kategId = req.params.id;
-        let ime_kategorije = req.body.ime_kat;
-        let kratak_opis = req.body.kr_op;
-
-        let query = "UPDATE `kategorije_komponenti` SET `ime_kategorije` = '" + ime_kategorije + "', `kratak_opis` = '" + kratak_opis + "' WHERE `kategorije_komponenti`.`id` = '" + kategId + "'";
+        let komplokId = req.params.id;
+        let kol = req.body.kolicina;
+        let lokacijaId = req.body.lokacija;
+	
+	let query="CALL update_kol(" + komplokId + "," + kol + "," + lokacijaId + ")";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);

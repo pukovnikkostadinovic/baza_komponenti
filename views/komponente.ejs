@@ -1,24 +1,54 @@
 <% include partials/header.ejs %>
     <div class="table-wrapper">
         <% if (komponente.length > 0) {%>
-            <table class="table table-hovered">
+            <table class="table table-bordered">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Ime komponente</th>
                         <th scope="col">Kratak opis</th>
+			<th scope="col">Komada</th>
                         <th scope="col">Akcija</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% komponente.forEach((komponenta, index) => { %>
-                        <tr>
+                         <% if (komponenta.komada === 0) {%>
+			<tr class="bg-danger">
                             <td class="col-md-3"><a href="/komp/<%= komponenta.id %>"><%= komponenta.ime_komponente %></a></td>
-                            <td class="col-md-7"><%= komponenta.kratak_opis_komp %></td>
-   			    <td class="col-md-2">
+                            <td class="col-md-5"><%= komponenta.kratak_opis_komp %></td>
+			    <td class="col-md-2 table-danger">
+				<%= komponenta.komada %>
+			    </td>   			    
+			    <td class="col-md-3">
                                 <a href="/izmjeni_komp/<%= komponenta.id %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Izmjeni</a>
                                 <a href="/izbrisi_komp/<%= komponenta.id %>" class="btn btn-sm btn-danger">Izbriši</a>
                             </td>
                         </tr>
+		       <% } else if (komponenta.komada===1) { %>
+			<tr class="bg-warning">
+                            <td class="col-md-3"><a href="/komp/<%= komponenta.id %>"><%= komponenta.ime_komponente %></a></td>
+                            <td class="col-md-5"><%= komponenta.kratak_opis_komp %></td>
+			    <td class="col-md-2">
+				<%= komponenta.komada %>
+			    </td>   			    
+			    <td class="col-md-3">
+                                <a href="/izmjeni_komp/<%= komponenta.id %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Izmjeni</a>
+                                <a href="/izbrisi_komp/<%= komponenta.id %>" class="btn btn-sm btn-danger">Izbriši</a>
+                            </td>
+                        </tr>
+			<% } else { %>
+			<tr>
+                            <td class="col-md-3"><a href="/komp/<%= komponenta.id %>"><%= komponenta.ime_komponente %></a></td>
+                            <td class="col-md-5"><%= komponenta.kratak_opis_komp %></td>
+			    <td class="col-md-2">
+				<%= komponenta.komada %>
+			    </td>   			    
+			    <td class="col-md-3">
+                                <a href="/izmjeni_komp/<%= komponenta.id %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Izmjeni</a>
+                                <a href="/izbrisi_komp/<%= komponenta.id %>" class="btn btn-sm btn-danger">Izbriši</a>
+                            </td>
+                        </tr>
+			<% } %>
                     <% }) %>
                 </tbody>
             </table>

@@ -7,7 +7,7 @@ const app = express();
 
 const {getHomePage} = require('./routes/index');
 const {getKategKomp} = require('./routes/index');
-const {editKompLokPage,addKompLok,addKompLokPage,editKomp,editKompPage,deleteKomp,addKompPage,addKomp,addPlayerPage, addPlayer, addKategPage, addKateg, deletePlayer,deleteKateg, editPlayer,editKateg, komponentePage,komplokPage, editPlayerPage, editKategPage} = require('./routes/player');
+const {editKompLokPage,editKompLok,addKompLok,addKompLokPage,editKomp,editKompPage,deleteKomp,addKompPage,addKomp,addPlayerPage, addPlayer, addKategPage, addKateg, deletePlayer,deleteKateg, editPlayer,editKateg, komponentePage,komplokPage, editPlayerPage, editKategPage} = require('./routes/player');
 const port = 5000;
 
 
@@ -80,6 +80,7 @@ app.post('/dod', addKateg);
 app.post('/edit/:id', editPlayer);
 app.post('/izmjeni/:id',editKateg);
 app.post('/dod_komp_lok/:id',addKompLok);
+app.post('/izmjeni_komplok/:id',editKompLok);
 
 // set the app to listen on the port
 app.listen(port, () => {

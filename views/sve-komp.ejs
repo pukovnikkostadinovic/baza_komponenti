@@ -1,41 +1,32 @@
 <% include partials/header.ejs %>
-    <div class="table-wrapper">
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Ime komponente</th>
-                        <th scope="col">Kratak opis</th>
-			<th scope="col">Komada</th>
-                    </tr>
-                </thead>
-                <tbody>
-  		    <% kat.forEach((kategorija, index)=>{ %>
-			<tr>
-                         <td class="bg-light"><h3><b>Kategorija: <%= kategorija.ime_kategorije %></b></h3></td>
-                        </tr>
-                    <% svekomp.forEach((komponenta, index) => { %>
-				<% if (kategorija.id==komponenta.kateg_id){ %>
-			     <tr>
-                            <td class="col-md-3"><h4><%= komponenta.ime_komponente %></h4></td>
-                            <td class="col-md-7"><h4><%= komponenta.kratak_opis_komp %></h4></td>
-			    <td class="col-md-2 <% if (komponenta.komada === 0) {%>bg-danger<% } else if(komponenta.komada === 1){ %>bg-warning"<% } %>">
-				<h4><%= komponenta.komada %></h4>
-			    </td>   			    
-                        </tr>
-			<% komp_lok.forEach((komp_lok, index)=> { %>
-			<% if(komponenta.id==komp_lok.komp_id){ %>
-			<tr>
-                            <td class="col-md-3"></td>
-                            <td class="col-md-7">[Komada: <%= komp_lok.kolicina %>] &nbsp &nbsp [Lokacija: <%= komp_lok.ime_lokacije %>]</td>
-			    <td class="col-md-2"></td>   
-			<% } %>
-			<% }) %>
-			<% } %>
-                    <% }) %>
-                    <% }) %>
-                </tbody>
-            </table>
+<div class="container">
+<ul class="list-group">
+ <% kat.forEach((kategorija, index)=>{ %>
+
+  <li class="list-group-item">Kategorija: <%= kategorija.ime_kategorije %></li>
+<div class="row">
+ <% svekomp.forEach((komponenta, index) => { %>
+<% if (kategorija.id==komponenta.kateg_id){ %>
+
+  <div class="col-sm-3">
+    <div class="card">
+	  <img class="card-img-top" src="<% if (komponenta.slika){ %><%= komponenta.slika %><% } else{ %>assets/img/no_image.jpg<% } %>" alt="Card image">
+      <div class="card-body">
+        <h5 class="card-title"><%= komponenta.ime_komponente %></h5>
+        <p class="card-text"><%= komponenta.kratak_opis_komp %></p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
     </div>
+  </div>
+
+<% } %>
+<% }) %>
 </div>
+
+  <% }) %>
+</ul>
+</div>
+
+
 </body>
 </html>

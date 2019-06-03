@@ -19,7 +19,11 @@
 			<div class="form-group col-md-12">
                     <textarea  class="form-control" rows="5" name="kr_op" id="kr_op" placeholder="Kratak Opis" required><%= komponenta.kratak_opis_komp %></textarea>
                 </div>
-	            <button type="submit" class="btn btn-primary float-right">Spremi Izmjenu</button>
+	<div class="form-group col-md-6">
+                     <input type="text" class="form-control" name="slika" id="slika" placeholder="slika" value="<%= komponenta.slika %>" >
+                </div>
+
+	          <br><button type="submit" class="btn btn-primary float-right">Spremi Izmjenu</button>
 </form>
     </div>
 </div>

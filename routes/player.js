@@ -175,8 +175,9 @@ editKompPage: (req,res)=>{
         let ime_komponente = req.body.ime_komp;
         let kategorija = req.body.kategorija;
 	let kr_opis = req.body.kr_op;
+	let slika = req.body.slika;
 	console.log(kategorija);
-        let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "', `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
+        let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "',`slika` = 'assets/img/" + slika + "', `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -185,7 +186,7 @@ editKompPage: (req,res)=>{
         });
     },
 sveKompPage: (req, res) => {
-        let query = "select k.id, k.kateg_id, k.ime_komponente,k.kratak_opis_komp,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id group by k.id order by k.kateg_id;select t.id,t.ime_kategorije from kategorije_komponenti t;select l.komp_id, l.kolicina, g.ime_lokacije from komp_lok_kol l,lokacije g where l.lok_id=g.id;";
+        let query = "select k.id, k.kateg_id, k.ime_komponente,k.kratak_opis_komp,k.slika,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id group by k.id order by k.kateg_id;select t.id,t.ime_kategorije from kategorije_komponenti t;select l.komp_id, l.kolicina, g.ime_lokacije from komp_lok_kol l,lokacije g where l.lok_id=g.id;";
 
         db.query(query, (err, result) => {
             if (err) {

@@ -3,7 +3,7 @@
 <ul class="list-group">
  <% kat.forEach((kategorija, index)=>{ %>
 
-  <li class="list-group-item">Kategorija: <%= kategorija.ime_kategorije %></li>
+  <li class="list-group-item"><h3><strong>Kategorija: <%= kategorija.ime_kategorije %></strong></h3></li>
 <div class="row">
  <% svekomp.forEach((komponenta, index) => { %>
 <% if (kategorija.id==komponenta.kateg_id){ %>
@@ -14,7 +14,7 @@
       <div class="card-body">
         <h5 class="card-title"><%= komponenta.ime_komponente %></h5>
         <p class="card-text"><%= komponenta.kratak_opis_komp %></p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="komp/<%= komponenta.id %>" class="btn btn-primary">Lokacija</a>
       </div>
     </div>
   </div>

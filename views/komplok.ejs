@@ -2,10 +2,10 @@
     <div class="table-wrapper">
         <% if (komplok.length > 0) {%>
             <table class="table table-hovered">
+	<h2><strong><%= komplok[0].ime_komponente %></strong></h2>
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Komponenta</th>
-                        <th scope="col">Kolicina</th>
+                        <th scope="col">Količina</th>
 			<th scope="col">Lokacija</th>
 			<th scope="col"></th>
                     </tr>
@@ -13,7 +13,6 @@
                 <tbody>
                     <% komplok.forEach((komp, index) => { %>
                         <tr>
-                            <td><%= komp.ime_komponente %></td>
                             <td><input type"number" name="ante" value="<%= komp.kolicina %>"></td>
 			    <td><%= komp.ime_lokacije %></td>
 			   <td>

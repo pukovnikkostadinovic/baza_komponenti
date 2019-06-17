@@ -175,9 +175,12 @@ editKompPage: (req,res)=>{
         let ime_komponente = req.body.ime_komp;
         let kategorija = req.body.kategorija;
 	let kr_opis = req.body.kr_op;
-	let slika = req.body.slika;
-	console.log(kategorija);
-        let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "',`slika` = 'assets/img/" + slika + "', `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
+	let slika =req.body.slika;
+	if(slika.length > 0){
+	slika="assets/img/"+slika;
+	};
+	//console.log(kategorija);
+        let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "',`slika` = '" + slika + "', `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);

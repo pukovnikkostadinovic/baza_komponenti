@@ -183,7 +183,7 @@ editKompPage: (req,res)=>{
 	slika="assets/img/"+ image_name;
 	}
 	console.log(image_name);
-	uploadedFile.mv(`public/assets/img/${image_name}`, (err ) => {
+	uploadedFile.mv(`/root/baza_komp/baza_komponenti/public/assets/img/${image_name}`, (err ) => {
                        if (err) {
                            return res.status(500).send(err);
                         }

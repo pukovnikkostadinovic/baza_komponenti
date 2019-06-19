@@ -176,11 +176,19 @@ editKompPage: (req,res)=>{
         let kategorija = req.body.kategorija;
 	let kr_opis = req.body.kr_op;
 	let slika =req.body.slika;
-	if(slika.length > 0){
-	slika="assets/img/"+slika;
-	};
-	//console.log(kategorija);
-        let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "',`slika` = '" + slika + "', `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
+	let uploadedFile = req.files.image;
+        let image_name = uploadedFile.name;
+        let fileExtension = uploadedFile.mimetype.split('/')[1];
+	if( image_name.length > 0){
+	slika="assets/img/"+ image_name;
+	}
+	console.log(image_name);
+	uploadedFile.mv(`public/assets/img/${image_name}`, (err ) => {
+                       if (err) {
+                           return res.status(500).send(err);
+                        }
+	});
+        let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "',`slika` = '" + image_name + "', `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -188,8 +196,8 @@ editKompPage: (req,res)=>{
             res.redirect('/');
         });
     },
-sveKompPage: (req, res) => {
-        let query = "select k.id, k.kateg_id, k.ime_komponente,k.kratak_opis_komp,k.slika,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id group by k.id order by k.kateg_id;select t.id,t.ime_kategorije from kategorije_komponenti t;select l.komp_id, l.kolicina, g.ime_lokacije from komp_lok_kol l,lokacije g where l.lok_id=g.id;";
+ sveKompPage: (req, res) => {
+      let query = "select k.id, k.kateg_id, k.ime_komponente,k.kratak_opis_komp,k.slika,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id group by k.id order by k.kateg_id;select t.id,t.ime_kategorije from kategorije_komponenti t;select l.komp_id, l.kolicina, g.ime_lokacije from komp_lok_kol l,lokacije g where l.lok_id=g.id;";
 
         db.query(query, (err, result) => {
             if (err) {

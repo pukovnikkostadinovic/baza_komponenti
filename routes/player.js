@@ -185,8 +185,8 @@ editKompPage: (req,res)=>{
 		obrisi = req.body.brisisl;
 		image_name=req.body.slika;
 		if(obrisi == 1){
-		//fs.unlink('public/assets/img/'+image_name, (err) => {
-		fs.unlink('/root/baza_komp/baza_komponenti/public/assets/img/'+image_name, (err) => {
+		fs.unlink('public/assets/img/'+image_name, (err) => {
+		//fs.unlink('/root/baza_komp/baza_komponenti/public/assets/img/'+image_name, (err) => {
 					if (err) throw err;
 		  			console.log('public/assets/img/'+image_name+' was deleted');
 				});
@@ -196,18 +196,22 @@ editKompPage: (req,res)=>{
 	}else{
 		slika=req.body.slika;
 		uploadedFile = req.files.image;
- 		 let img_name = uploadedFile.name;
-		image_name= "'"+uploadedFile.name+"'";
+ 		 //let img_name = uploadedFile.name;
+		image_name= uploadedFile.name;
         	fileExtension = uploadedFile.mimetype.split('/')[1];
-		uploadedFile.mv(`/root/baza_komp/baza_komponenti/public/assets/img/${img_name}`, (err ) => {
-		//uploadedFile.mv(`public/assets/img/${img_name}`, (err ) => {
+		//uploadedFile.mv(`/root/baza_komp/baza_komponenti/public/assets/img/${image_name}`, (err ) => {
+		uploadedFile.mv(`public/assets/img/${image_name}`, (err ) => {
                        if (err) {
                            return res.status(500).send(err);
                         }
-
+		image_name= "'"+image_name+"'";
 		});
 	
 			}
+	if(image_name){
+	image_name="'"+image_name+"'";
+	console.log(image_name);
+	}
 	let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "',`slika` = " + image_name + ", `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
         db.query(query, (err, result) => {
             if (err) {

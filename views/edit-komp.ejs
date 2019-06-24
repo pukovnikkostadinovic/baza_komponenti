@@ -18,15 +18,23 @@
 	
 			<div class="form-group col-md-12">
                     <textarea  class="form-control" rows="5" name="kr_op" id="kr_op" placeholder="Kratak Opis" required><%= komponenta.kratak_opis_komp %></textarea>
+			<input type="hidden" name="slika" value = "<%= komponenta.slika %>">
                 </div>
-	<!--<div class="form-group col-md-6">
-                     <input type="text" class="form-control" name="slika" id="slika" placeholder="slika" value="<%= komponenta.slika %>" >
-                </div>-->
+		<%if (!komponenta.slika) { %>
 		<div class="col-md-12">
                     <label for="komp-img"><b>Slika komponente</b></label><br>
                     <input type="file" name="image" id="komp-img" class="" required>
                 </div>
-
+		<% } else{ %>
+<div class="col-md-12">
+			 <div class="radio">
+				  <label><input type="radio" name="brisisl"  value="0"checked>Ne briši sliku</label>
+				</div>
+				<div class="radio">
+  				<label><input type="radio" name="brisisl" value="1">Briši sliku</label>
+				</div>
+		</div>
+		 <% } %>                        
 	          <br><button type="submit" class="btn btn-primary float-right">Spremi Izmjenu</button>
 </form>
     </div>

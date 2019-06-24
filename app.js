@@ -25,6 +25,7 @@ const port = 5000;
 const db1 = mysql.createConnection ({
     host: 'localhost',
     user: 'dlibreman',
+    //user:'root',
     password: 'dlibreman',
     database: 'baza_komponenti',
 	multipleStatements: true

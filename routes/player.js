@@ -175,26 +175,49 @@ editKompPage: (req,res)=>{
         let ime_komponente = req.body.ime_komp;
         let kategorija = req.body.kategorija;
 	let kr_opis = req.body.kr_op;
-	let slika =req.body.slika;
-	let uploadedFile = req.files.image;
-        let image_name = uploadedFile.name;
-        let fileExtension = uploadedFile.mimetype.split('/')[1];
+	let slika;
+	let uploadedFile;
+        let image_name = req.body.slika;
+        let fileExtension;
+	let obrisi;
+
 	if( image_name.length > 0){
-	slika="assets/img/"+ image_name;
-	}
-	console.log(image_name);
-	uploadedFile.mv(`/root/baza_komp/baza_komponenti/public/assets/img/${image_name}`, (err ) => {
-                       if (err) {
-                           return res.status(500).send(err);
-                        }
-	});
-        let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "',`slika` = '" + image_name + "', `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
+		obrisi = req.body.brisisl;
+		image_name=req.body.slika;
+		if(obrisi == 1){
+		//fs.unlink('public/assets/img/'+image_name, (err) => {
+		fs.unlink('/root/baza_komp/baza_komponenti/public/assets/img/'+image_name, (err) => {
+					if (err) throw err;
+		  			console.log('public/assets/img/'+image_name+' was deleted');
+				});
+			let query = "UPDATE `komponente` SET `slika` = null WHERE `id` = '" + kompId + "'";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
             }
             res.redirect('/');
         });
+			    }
+	}else{
+		slika=req.body.slika;
+		uploadedFile = req.files.image;
+        	image_name = uploadedFile.name;
+        	fileExtension = uploadedFile.mimetype.split('/')[1];
+		uploadedFile.mv(`/root/baza_komp/baza_komponenti/public/assets/img/${image_name}`, (err ) => {
+		//uploadedFile.mv(`public/assets/img/${image_name}`, (err ) => {
+                       if (err) {
+                           return res.status(500).send(err);
+                        }
+		});
+	let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "',`slika` = '" + image_name + "', `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
+        db.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.redirect('/');
+        });
+			}
+
     },
  sveKompPage: (req, res) => {
       let query = "select k.id, k.kateg_id, k.ime_komponente,k.kratak_opis_komp,k.slika,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id group by k.id order by k.kateg_id;select t.id,t.ime_kategorije from kategorije_komponenti t;select l.komp_id, l.kolicina, g.ime_lokacije from komp_lok_kol l,lokacije g where l.lok_id=g.id;";

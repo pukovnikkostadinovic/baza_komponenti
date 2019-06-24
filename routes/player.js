@@ -185,8 +185,8 @@ editKompPage: (req,res)=>{
 		obrisi = req.body.brisisl;
 		image_name=req.body.slika;
 		if(obrisi == 1){
-		fs.unlink('public/assets/img/'+image_name, (err) => {
-		//fs.unlink('/root/baza_komp/baza_komponenti/public/assets/img/'+image_name, (err) => {
+		//fs.unlink('public/assets/img/'+image_name, (err) => {
+		fs.unlink('/root/baza_komp/baza_komponenti/public/assets/img/'+image_name, (err) => {
 					if (err) throw err;
 		  			console.log('public/assets/img/'+image_name+' was deleted');
 				});
@@ -199,8 +199,8 @@ editKompPage: (req,res)=>{
  		 //let img_name = uploadedFile.name;
 		image_name= uploadedFile.name;
         	fileExtension = uploadedFile.mimetype.split('/')[1];
-		//uploadedFile.mv(`/root/baza_komp/baza_komponenti/public/assets/img/${image_name}`, (err ) => {
-		uploadedFile.mv(`public/assets/img/${image_name}`, (err ) => {
+		uploadedFile.mv(`/root/baza_komp/baza_komponenti/public/assets/img/${image_name}`, (err ) => {
+		//uploadedFile.mv(`public/assets/img/${image_name}`, (err ) => {
                        if (err) {
                            return res.status(500).send(err);
                         }

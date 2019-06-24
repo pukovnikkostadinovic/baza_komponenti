@@ -190,34 +190,31 @@ editKompPage: (req,res)=>{
 					if (err) throw err;
 		  			console.log('public/assets/img/'+image_name+' was deleted');
 				});
-			let query = "UPDATE `komponente` SET `slika` = null WHERE `id` = '" + kompId + "'";
-        db.query(query, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.redirect('/');
-        });
-			    }
+			image_name = null;
+		    }
+
 	}else{
 		slika=req.body.slika;
 		uploadedFile = req.files.image;
-        	image_name = uploadedFile.name;
+ 		 let img_name = uploadedFile.name;
+		image_name= "'"+uploadedFile.name+"'";
         	fileExtension = uploadedFile.mimetype.split('/')[1];
-		uploadedFile.mv(`/root/baza_komp/baza_komponenti/public/assets/img/${image_name}`, (err ) => {
-		//uploadedFile.mv(`public/assets/img/${image_name}`, (err ) => {
+		uploadedFile.mv(`/root/baza_komp/baza_komponenti/public/assets/img/${img_name}`, (err ) => {
+		//uploadedFile.mv(`public/assets/img/${img_name}`, (err ) => {
                        if (err) {
                            return res.status(500).send(err);
                         }
+
 		});
-	let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "',`slika` = '" + image_name + "', `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
+	
+			}
+	let query = "UPDATE `komponente` SET `ime_komponente` = '" + ime_komponente + "', `kratak_opis_komp` = '" + kr_opis + "',`slika` = " + image_name + ", `kateg_id` = '" + kategorija + "' WHERE `id` = '" + kompId + "'";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
             }
             res.redirect('/');
         });
-			}
-
     },
  sveKompPage: (req, res) => {
       let query = "select k.id, k.kateg_id, k.ime_komponente,k.kratak_opis_komp,k.slika,sum(coalesce(d.kolicina,0)) komada from komponente k left join komp_lok_kol d on k.id = d.komp_id group by k.id order by k.kateg_id;select t.id,t.ime_kategorije from kategorije_komponenti t;select l.komp_id, l.kolicina, g.ime_lokacije from komp_lok_kol l,lokacije g where l.lok_id=g.id;";

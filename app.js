@@ -29,11 +29,11 @@ const port = 5000;
 
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.
-const dbcred = require('./config/keys');
+
+const dbcred = require('./config/keys').db;
 
 const db = mysql.createConnection ({
     host: dbcred.host,
-    //user: 'dlibreman',
     user:dbcred.username,
     password: dbcred.password,
     database: dbcred.database,

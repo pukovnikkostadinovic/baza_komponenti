@@ -200,7 +200,7 @@ editKompPage: (req,res)=>{
  		 //let img_name = uploadedFile.name;
 		image_name= uploadedFile.name;
         	fileExtension = uploadedFile.mimetype.split('/')[1];
-		uploadedFile.mv(img+`${image_name}`, (err ) => {
+		uploadedFile.mv(img_path+`${image_name}`, (err ) => {
                        if (err) {
                            return res.status(500).send(err);
                         }

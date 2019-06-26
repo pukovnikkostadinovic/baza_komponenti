@@ -1,5 +1,5 @@
 module.exports = {
-  getHomePage: (req, res) => {
+  /*getHomePage: (req, res) => {
         let query = "SELECT * FROM `players` ORDER BY id ASC"; // query database to get all the players
 
         // execute query
@@ -12,7 +12,7 @@ module.exports = {
                 ,players: result
             });
         });
-    },
+    },*/
 getKategKomp: (req, res) => {
         let query = "SELECT * FROM `kategorije_komponenti` ORDER BY id ASC"; // query database to get all the players
 

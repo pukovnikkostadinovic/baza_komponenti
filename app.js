@@ -5,9 +5,23 @@ const mysql = require('mysql');
 const path = require('path');
 const app = express();
 
-const {getHomePage} = require('./routes/index');
+
+
 const {getKategKomp} = require('./routes/index');
-const {sveKompPage,editKompLokPage,editKompLok,addKompLok,addKompLokPage,editKomp,editKompPage,deleteKomp,addKompPage,addKomp,addPlayerPage, addPlayer, addKategPage, addKateg, deletePlayer,deleteKateg, editPlayer,editKateg, komponentePage,komplokPage, editPlayerPage, editKategPage} = require('./routes/player');
+const {sveKompPage,editKompLokPage,
+		editKompLok,addKompLok,
+		addKompLokPage,editKomp,
+		editKompPage,deleteKomp,
+		addKompPage,addKomp,
+		addPlayerPage, addPlayer,
+		addKategPage, addKateg, 
+		deletePlayer,deleteKateg, 
+		editPlayer,editKateg, 
+		komponentePage,komplokPage, 
+		editPlayerPage, editKategPage} = require('./routes/player');
+
+const {getLoginPage, getRegPage,
+		getReg} = require('./routes/users');
 const port = 5000;
 
 
@@ -15,38 +29,26 @@ const port = 5000;
 
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.
-/*const db = mysql.createConnection ({
-    host: 'localhost',
-    user: 'root',
-    password: 'dlibreman',
-    database: 'socka'
-});*/
+const dbcred = require('./config/keys');
 
-const db1 = mysql.createConnection ({
-    host: 'localhost',
-    user: 'dlibreman',
-    //user:'root',
-    password: 'dlibreman',
-    database: 'baza_komponenti',
-	multipleStatements: true
+const db = mysql.createConnection ({
+    host: dbcred.host,
+    //user: 'dlibreman',
+    user:dbcred.username,
+    password: dbcred.password,
+    database: dbcred.database,
+    multipleStatements: true
 });
 
 // connect to database
-/*db.connect((err) => {
+db.connect((err) => {
     if (err) {
         throw err;
     }
-    console.log('Connected to database 1');
-});*/
-
-db1.connect((err) => {
-    if (err) {
-        throw err;
-    }
-    console.log('Connected to database 2');
+    console.log('Spojen na bazu');
 });
 
-global.db = db1;
+global.db = db;
 
 // configure middleware
 app.set('port', process.env.port || port); // set express to use this port
@@ -59,6 +61,8 @@ app.use(fileUpload()); // configure fileupload
 
 // routes for the app
 
+app.get('/users/login',getLoginPage);
+app.get('/users/register',getRegPage);
 app.get('/sve_komp', sveKompPage);
 app.get('/', getKategKomp);
 app.get('/kateg/:id',komponentePage);
@@ -75,6 +79,7 @@ app.get('/izmjeni_komp/:id',editKompPage);
 app.get('/dod_komp_lok/:id',addKompLokPage);
 app.get('/izmjeni_komplok/:id',editKompLokPage);
 
+app.post('/users/register',getReg);
 app.post('/izmjeni_komp/:id',editKomp);
 app.post('/dod_komp',addKomp);
 app.post('/add', addPlayer);
